@@ -3,10 +3,13 @@
   height: 100%;
   position: relative;
   text-decoration: none;
+}
+
+.product-grid-container .card-wrapper {
   border : 1px solid black;
 }
 
-.card-wrapper > .card > .card__content {
+.product-grid-container .card-wrapper > .card > .card__content {
   padding : 0 10px;
 }
 

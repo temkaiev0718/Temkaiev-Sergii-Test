@@ -3,6 +3,15 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 
+
+<style>
+
+  #shopify-section-{{ section.id }}:has(.cart__footer.is-empty) {
+    display: none;
+  }
+
+</style>
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -24,6 +33,12 @@
 >
   <div class="page-width">
     <div class="cart__footer isolate section-{{ section.id }}-padding">
+      {%- if cart.item_count > 0 -%}
+        <div class="custom-cart__footer-top">
+          <div class="button button-primary btn-cart-remove-all">Remove all</div>
+        </div>
+      {%- endif -%}
+
       {%- if settings.show_cart_note -%}
         <cart-note class="cart__note field">
           <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
@@ -132,6 +147,53 @@
     </div>
   </div>
 </div>
+
+<script>
+
+  function clearCart() {
+    fetch('/cart/clear.js', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+          // Update the cart UI without reloading
+          updateCartUI();
+      } else {
+          console.error('Failed to clear cart');
+      }
+    });
+  }
+
+  function updateCartUI() {
+    fetch('https://anup-saund-test.myshopify.com/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        const cartCount = document.querySelector('.cart-count-bubble'); // Adjust selector as needed
+        const cartItemsContainer = document.querySelector('.cart-items'); // Adjust selector as needed
+        
+        cartItemsContainer.innerHTML = '';
+        // Optionally, display a message or update UI further
+        if (cart.item_count === 0) {
+          cartCount.remove();
+          cartItemsContainer.innerHTML = '<p>Your main cart is empty.</p>';
+          document.querySelector(".main-cart-container").classList.add("is-empty");
+          document.querySelector("#main-cart-footer").classList.add("is-empty");
+        }
+      });
+  }
+
+  if(document.querySelector(".cart__footer .custom-cart__footer-top .btn-cart-remove-all")) {
+    document.querySelector(".cart__footer .custom-cart__footer-top .btn-cart-remove-all").addEventListener("click", function() {
+      clearCart();
+    });
+  }
+
+
+</script>
 
 {% schema %}
 {
