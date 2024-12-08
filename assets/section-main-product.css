@@ -278,6 +278,10 @@ a.product__text {
   margin-bottom: 0.5rem;
 }
 
+.product .price__container * {
+  color : red;
+}
+
 .product .price dl {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
