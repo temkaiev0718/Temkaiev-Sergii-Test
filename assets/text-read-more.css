@@ -1,0 +1,39 @@
+.pdp-product-extra-info-container {
+    animation : ani_show 0.5s linear;
+}
+
+.pdp-product-extra-info-container.over-content .pdp-product-extra-info-main {
+    max-height: 200px;
+    overflow: hidden;
+    transition:all 0.7s;
+    position: relative;
+}
+
+.pdp-product-extra-info-container.over-content .pdp-product-extra-info-main::before {
+    content : "";
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    bottom: 0%;
+    left: 0;
+    background-image: linear-gradient(to top, white, transparent);
+    z-index: 1;
+}
+
+.pdp-product-extra-info-container.side-hidden .pdp-product-extra-info-main::before {
+    display: none;
+}
+
+.pdp-product-extra-info-container .btn-read-more {
+    color : rgba(var(--color-foreground), 0.75);
+    text-transform: capitalize;
+}
+
+.pdp-product-extra-info-container .btn-read-more.disabled {
+    display: none;
+}
+
+@keyframes ani_show {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

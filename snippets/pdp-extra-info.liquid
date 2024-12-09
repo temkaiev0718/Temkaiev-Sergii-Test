@@ -1,0 +1,22 @@
+{% if block.settings.enable_readmore_button == true %}
+    {{ "text-read-more.css" | asset_url | stylesheet_tag }}
+{% endif %}
+
+{%- if block.settings.pdp_info_text != blank -%}
+    <div class="pdp-product-extra-info-container {% if block.settings.enable_readmore_button == true %} over-content {% endif %}">
+        {%- if block.settings.enable_readmore_button == false -%}
+            {{ block.settings.pdp_info_text }}
+        {%- else -%}
+            <div class="pdp-product-extra-info-main">
+            <div class="pdp-text-content">
+                {{ block.settings.pdp_info_text }}
+            </div> 
+            </div>
+            <a href="#" class="btn-read-more disabled">read more</a>
+        {%- endif -%}
+    </div> 
+{%- endif -%}
+
+{% if block.settings.enable_readmore_button == true %}
+    <script src="{{ "text-read-more.js" | asset_url }}"></script>
+{% endif %}
