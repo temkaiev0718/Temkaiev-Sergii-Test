@@ -309,6 +309,8 @@
 
     {% sections 'header-group' %}
 
+    {{ request.geo.country_code }}
+
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
